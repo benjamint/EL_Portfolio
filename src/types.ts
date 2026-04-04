@@ -33,84 +33,19 @@ export interface CaseStudy {
   execution: string[];
   outcome: string[];
   reflection: string;
+  link?: {
+    label: string;
+    url: string;
+  };
+  pdfLink?: string;
+  seo: {
+    title: string;
+    description: string;
+    keywords: string[];
+  };
 }
 
 export const caseStudies: CaseStudy[] = [
-  {
-    id: "float-virtual-card",
-    title: "Float Virtual Card",
-    subtitle: "Reducing Credit Default Through Controlled Spending",
-    company: "Float (YC-backed)",
-    role: "Product Design Lead",
-    period: "2021 - 2022",
-    color: "#eab308",
-    image: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=1200",
-    tags: ["Fintech", "Credit Systems"],
-    
-    impact: [
-      { label: "Active Utilization", value: "70%" },
-      { label: "Faster Transactions", value: "30%" },
-      { label: "Default Rates", value: "Reduced" }
-    ],
-    overview: {
-      role: "Product Design Lead",
-      scope: "0 → 1 credit system redesign",
-      team: "Product, Engineering, Risk, Compliance",
-      context: "YC-backed fintech scaling in Africa"
-    },
-    problem: [
-      "SMEs received cash loans that were misused.",
-      "Funds were hard to track after disbursement.",
-      "High risk for default due to lack of visibility."
-    ],
-    goal: [
-      "Create a credit system that controls usage.",
-      "Reduce default risk through spending discipline.",
-      "Maintain transaction speed for SMEs."
-    ],
-    myRole: [
-      "Led product design end-to-end.",
-      "Defined system direction with stakeholders.",
-      "Built research and validation processes."
-    ],
-    keyInsight: [
-      "Credit failure was not access—it was lack of control at point of use."
-    ],
-    solution: [
-      "Virtual credit card system.",
-      "Spend only at transaction level.",
-      "Real-time tracking and controlled usage."
-    ],
-    keyDecisions: [
-      {
-        title: "Replace cash with controlled credit",
-        why: "To ensure borrowed funds are spent on business-critical needs.",
-        tradeoff: "Slightly higher friction for users accustomed to cash liquidity."
-      },
-      {
-        title: "Issue credit at transaction level",
-        why: "To prevent lump-sum misuse and improve risk scoring accuracy.",
-        tradeoff: "Requires real-time authorization logic which increases engineering complexity."
-      },
-      {
-        title: "Build real-time visibility",
-        why: "To restore trust between lenders and borrowers through transparency.",
-        tradeoff: "Significant investment in backend infrastructure for live data syncing."
-      }
-    ],
-    execution: [
-      "70+ SME interviews.",
-      "JTBD framework.",
-      "Rapid prototyping.",
-      "Cross-functional collaboration."
-    ],
-    outcome: [
-      "Reduced misuse.",
-      "Improved repayment.",
-      "Scalable credit model."
-    ],
-    reflection: "System design > UI design in fintech"
-  },
   {
     id: "embedded-checkout",
     title: "Embedded Checkout",
@@ -119,12 +54,12 @@ export const caseStudies: CaseStudy[] = [
     role: "Senior Product Designer",
     period: "2022 - Present",
     color: "#f97316",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1200",
+    image: "https://www.peachpayments.com/wp-content/uploads/2025/07/Mobile-First-Checkout.png",
     tags: ["Fintech", "Payments"],
     
     impact: [
-      { label: "Conversion Increase", value: "+17%" },
-      { label: "Drop-off Reduction", value: "23%" },
+      { label: "Conversion", value: "+17%" },
+      { label: "Drop-off", value: "23%" },
       { label: "Adoption", value: "70%" }
     ],
     overview: {
@@ -183,23 +118,118 @@ export const caseStudies: CaseStudy[] = [
       "Faster merchant integration.",
       "Improved trust."
     ],
-    reflection: "Trust is the most critical UX factor in payments"
+    reflection: "Trust is the most critical UX factor in payments",
+    link: {
+      label: "Visit Peach Payments",
+      url: "https://www.peachpayments.com/products/embedded-checkout/"
+    },
+    pdfLink: "https://drive.google.com/file/d/1-F-D21h91OfHJf32VrXMzVESpKi0_kGb/view",
+    seo: {
+      title: "Embedded Checkout Case Study | Benjamin Sackey",
+      description: "A deep dive into the redesign of Peach Payments' checkout experience, increasing conversion by 17% through seamless embedded payments.",
+      keywords: ["Checkout Design", "Payment UX", "Conversion Optimization", "Fintech Design", "African E-commerce", "Benjamin Sackey"]
+    }
+  },
+  {
+    id: "float-virtual-card",
+    title: "Float Virtual Card",
+    subtitle: "Reducing Credit Default Through Controlled Spending",
+    company: "Float (YC-backed)",
+    role: "Product Design Lead",
+    period: "2021 - 2022",
+    color: "#eab308",
+    image: "https://www.peachpayments.com/wp-content/uploads/2025/07/Foreign-Card-Acceptance.png",
+    tags: ["Fintech", "Credit"],
+    
+    impact: [
+      { label: "Utilization", value: "70%" },
+      { label: "Speed", value: "30%" },
+      { label: "Up Repayment", value: "90%" }
+    ],
+    overview: {
+      role: "Product Design Lead",
+      scope: "0 → 1 credit system redesign",
+      team: "Product, Engineering, Risk, Compliance",
+      context: "YC-backed fintech scaling in Africa"
+    },
+    problem: [
+      "SMEs received cash loans that were misused.",
+      "Funds were hard to track after disbursement.",
+      "High risk for default due to lack of visibility."
+    ],
+    goal: [
+      "Create a credit system that controls usage.",
+      "Reduce default risk through spending discipline.",
+      "Maintain transaction speed for SMEs."
+    ],
+    myRole: [
+      "Led product design end-to-end.",
+      "Defined system direction with stakeholders.",
+      "Built research and validation processes."
+    ],
+    keyInsight: [
+      "Credit failure was not access—it was lack of control at point of use."
+    ],
+    solution: [
+      "Virtual credit card system.",
+      "Spend only at transaction level.",
+      "Real-time tracking and controlled usage."
+    ],
+    keyDecisions: [
+      {
+        title: "Replace cash with controlled credit",
+        why: "To ensure borrowed funds are spent on business-critical needs.",
+        tradeoff: "Slightly higher friction for users accustomed to cash liquidity."
+      },
+      {
+        title: "Issue credit at transaction level",
+        why: "To prevent lump-sum misuse and improve risk scoring accuracy.",
+        tradeoff: "Requires real-time authorization logic which increases engineering complexity."
+      },
+      {
+        title: "Build real-time visibility",
+        why: "To restore trust between lenders and borrowers through transparency.",
+        tradeoff: "Significant investment in backend infrastructure for live data syncing."
+      }
+    ],
+    execution: [
+      "70+ SME interviews.",
+      "JTBD framework.",
+      "Rapid prototyping.",
+      "Cross-functional collaboration."
+    ],
+    outcome: [
+      "Reduced misuse.",
+      "Improved repayment.",
+      "Scalable credit model."
+    ],
+    reflection: "System design > UI design in fintech",
+    link: {
+      label: "Visit Float",
+      url: "https://linktr.ee/floatglobal"
+    },
+    pdfLink: "https://drive.google.com/file/d/1-F-D21h91OfHJf32VrXMzVESpKi0_kGb/view",
+    seo: {
+      title: "Float Virtual Card Case Study | Benjamin Sackey",
+      description: "How Benjamin Sackey designed a virtual credit card system for Float to reduce SME credit default through controlled spending and real-time tracking.",
+      keywords: ["Product Design", "Fintech UX", "Credit Systems", "SME Finance", "Virtual Cards", "Benjamin Sackey"]
+    }
   },
   {
     id: "mergdata",
     title: "Mergdata",
-    subtitle: "Digitizing Agricultural Supply Chains Through Data Infrastructure",
+    subtitle: "Digitizing Agricultural Supply Chains",
     company: "Mergdata",
     role: "Product Design Consultant",
     period: "2020 - 2021",
     color: "#10b981",
-    image: "https://picsum.photos/seed/mergdata/1200/800",
-    tags: ["Agtech", "Data Infrastructure", "SaaS"],
+    image: "https://mergdata.com/wp-content/uploads/2025/06/darli.jpg",
+    tags: ["Agtech", "Data Infra", "SaaS"],
     
     impact: [
-      { label: "Farmer Reach", value: "100k+" },
-      { label: "Global Presence", value: "50+ Countries" },
-      { label: "Partners", value: "3,000+" }
+      { label: "Reach", value: "100k+" },
+      { label: "Global", value: "50+" },
+      { label: "Partners", value: "3k+" }
     ],
     overview: {
       role: "Product Design Consultant",
@@ -265,6 +295,16 @@ export const caseStudies: CaseStudy[] = [
       "Enabled organizations to track impact and ensure compliance.",
       "Built a foundational data infrastructure layer for agriculture."
     ],
-    reflection: "Designing for the 'real world' requires offline thinking and infrastructure-level design."
+    reflection: "Designing for the 'real world' requires offline thinking and infrastructure-level design.",
+    link: {
+      label: "Visit Mergdata",
+      url: "https://mergdata.com"
+    },
+    pdfLink: "https://drive.google.com/file/d/1-F-D21h91OfHJf32VrXMzVESpKi0_kGb/view",
+    seo: {
+      title: "Mergdata Agricultural Supply Chain Case Study | Benjamin Sackey",
+      description: "Digitizing agricultural supply chains in low-connectivity environments. Benjamin Sackey's work on Mergdata's SaaS platform for agribusinesses.",
+      keywords: ["Agtech Design", "SaaS UX", "Supply Chain Digitization", "Offline-first Design", "Data Infrastructure", "Benjamin Sackey"]
+    }
   }
 ];
