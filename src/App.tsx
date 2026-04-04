@@ -321,42 +321,49 @@ export default function App() {
       </AnimatePresence>
 
       {/* Footer */}
-      <footer id="contact" className="px-6 py-32 border-t border-gray-100 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
+      <footer id="contact" className="px-6 py-32 relative overflow-hidden bg-black">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 z-0 opacity-60 bg-cover bg-center"
+          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?auto=format&fit=crop&q=80&w=2000")' }}
+        />
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/40 to-black/80" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
             <div>
-              <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight">Let's build something together.</h2>
-              <p className="text-xl text-gray-500 font-light mb-12 max-w-md leading-relaxed">
+              <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight text-white">Let's build something together.</h2>
+              <p className="text-xl text-white/60 font-light mb-12 max-w-md leading-relaxed">
                 I’m always open to discussing new projects, design systems, or opportunities to help teams scale.
               </p>
               
               <div className="space-y-8">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Location</p>
-                  <p className="text-lg font-medium">Amsterdam, Netherlands & Remote</p>
+                  <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Location</p>
+                  <p className="text-lg font-medium text-white">Amsterdam, Netherlands & Remote</p>
                 </div>
                 
                 <div className="flex flex-col gap-6">
                   <div className="flex gap-8">
-                    <a href="https://www.linkedin.com/in/mrbenjamint/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-black transition-colors" aria-label="LinkedIn"><Linkedin size={24} /></a>
-                    <a href="https://www.instagram.com/mr_benjamn_/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-black transition-colors" aria-label="Instagram"><Instagram size={24} /></a>
-                    <a href="mailto:bensackey5@gmail.com" className="text-gray-400 hover:text-black transition-colors" aria-label="Email"><Mail size={24} /></a>
+                    <a href="https://www.linkedin.com/in/mrbenjamint/" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin size={24} /></a>
+                    <a href="https://www.instagram.com/mr_benjamn_/" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors" aria-label="Instagram"><Instagram size={24} /></a>
+                    <a href="mailto:bensackey5@gmail.com" className="text-white/40 hover:text-white transition-colors" aria-label="Email"><Mail size={24} /></a>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white p-8 md:p-12 rounded-3xl border border-gray-100 shadow-sm">
-              <ContactForm />
+            <div className="bg-white/10 backdrop-blur-xl p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
+              <ContactForm isDark={true} />
             </div>
           </div>
           
-          <div className="mt-32 pt-12 border-t border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+          <div className="mt-32 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div>
-              <h3 className="text-xl font-display font-bold tracking-tight">Benjamin Sackey</h3>
-              <p className="text-sm text-gray-400">Senior Product Designer at Peach Payments</p>
+              <h3 className="text-xl font-display font-bold tracking-tight text-white">Benjamin Sackey</h3>
+              <p className="text-sm text-white/40">Senior Product Designer at Peach Payments</p>
             </div>
-            <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">© 2026 Benjamin Sackey</p>
+            <p className="text-xs text-white/40 uppercase tracking-widest font-bold">© 2026 Benjamin Sackey</p>
           </div>
         </div>
       </footer>
@@ -364,7 +371,7 @@ export default function App() {
   );
 }
 
-function ContactForm() {
+function ContactForm({ isDark = false }: { isDark?: boolean }) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -405,11 +412,11 @@ function ContactForm() {
         <div className="w-16 h-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-6">
           <CheckCircle2 size={32} />
         </div>
-        <h3 className="text-2xl font-display font-bold mb-2">Message Sent!</h3>
-        <p className="text-gray-500 font-light mb-8">Thanks for reaching out. I'll get back to you as soon as possible.</p>
+        <h3 className={`text-2xl font-display font-bold mb-2 ${isDark ? 'text-white' : 'text-black'}`}>Message Sent!</h3>
+        <p className={`${isDark ? 'text-white/60' : 'text-gray-500'} font-light mb-8`}>Thanks for reaching out. I'll get back to you as soon as possible.</p>
         <button 
           onClick={() => setStatus('idle')}
-          className="text-sm font-bold uppercase tracking-widest border-b-2 border-brand-accent pb-1 hover:opacity-50 transition-opacity"
+          className={`text-sm font-bold uppercase tracking-widest border-b-2 border-brand-accent pb-1 hover:opacity-50 transition-opacity ${isDark ? 'text-white' : 'text-black'}`}
         >
           Send another message
         </button>
@@ -421,38 +428,38 @@ function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label htmlFor="name" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Name</label>
+          <label htmlFor="name" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/40' : 'text-gray-400'}`}>Name</label>
           <input
             required
             type="text"
             id="name"
             name="name"
             placeholder="Your name"
-            className="w-full px-0 py-3 bg-transparent border-b border-gray-200 focus:border-black focus:outline-none transition-colors font-light text-lg"
+            className={`w-full px-0 py-3 bg-transparent border-b ${isDark ? 'border-white/10 focus:border-white text-white' : 'border-gray-200 focus:border-black'} focus:outline-none transition-colors font-light text-lg`}
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Email</label>
+          <label htmlFor="email" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/40' : 'text-gray-400'}`}>Email</label>
           <input
             required
             type="email"
             id="email"
             name="email"
             placeholder="your@email.com"
-            className="w-full px-0 py-3 bg-transparent border-b border-gray-200 focus:border-black focus:outline-none transition-colors font-light text-lg"
+            className={`w-full px-0 py-3 bg-transparent border-b ${isDark ? 'border-white/10 focus:border-white text-white' : 'border-gray-200 focus:border-black'} focus:outline-none transition-colors font-light text-lg`}
           />
         </div>
       </div>
       
       <div className="space-y-2">
-        <label htmlFor="message" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Message</label>
+        <label htmlFor="message" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/40' : 'text-gray-400'}`}>Message</label>
         <textarea
           required
           id="message"
           name="message"
           rows={4}
           placeholder="Tell me about your project..."
-          className="w-full px-0 py-3 bg-transparent border-b border-gray-200 focus:border-black focus:outline-none transition-colors font-light text-lg resize-none"
+          className={`w-full px-0 py-3 bg-transparent border-b ${isDark ? 'border-white/10 focus:border-white text-white' : 'border-gray-200 focus:border-black'} focus:outline-none transition-colors font-light text-lg resize-none`}
         ></textarea>
       </div>
 
