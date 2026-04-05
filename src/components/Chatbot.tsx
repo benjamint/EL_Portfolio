@@ -103,9 +103,10 @@ export function Chatbot({ onNavigate }: { onNavigate: (id: string) => void }) {
           <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'user' ? 'bg-brand-accent text-white' : 'bg-gray-200 text-gray-600'}`}>
             {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
           </div>
-          <div className={`p-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user' ? 'bg-brand-accent text-white rounded-tr-none' : 'bg-white border border-gray-100 text-gray-800 rounded-tl-none shadow-sm'}`}>
-            {cleanText}
-          </div>
+            <div className={`p-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user' ? 'bg-brand-accent text-white rounded-tr-none' : 'bg-white border border-gray-100 text-gray-800 rounded-tl-none shadow-sm'}`}>
+              <span className="sr-only">{msg.role === 'user' ? 'You said: ' : 'Assistant said: '}</span>
+              {cleanText}
+            </div>
         </div>
         {projectMatch && (
           <div className={`ml-10 ${msg.role === 'user' ? 'mr-10 ml-0' : ''}`}>
@@ -155,13 +156,21 @@ export function Chatbot({ onNavigate }: { onNavigate: (id: string) => void }) {
                   <p className="text-[10px] opacity-60">Powered by Gemini</p>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="hover:opacity-50 transition-opacity">
+              <button 
+                onClick={() => setIsOpen(false)} 
+                className="hover:opacity-50 transition-opacity"
+                aria-label="Close chatbot"
+              >
                 <X size={20} />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-gray-50/50">
+            <div 
+              className="flex-1 overflow-y-auto p-4 space-y-6 bg-gray-50/50"
+              aria-live="polite"
+              aria-relevant="additions"
+            >
               {messages.map((msg, i) => (
                 <div key={i}>
                   {renderMessage(msg)}
@@ -169,7 +178,7 @@ export function Chatbot({ onNavigate }: { onNavigate: (id: string) => void }) {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="flex gap-2 items-center text-gray-400">
+                  <div className="flex gap-2 items-center text-gray-500">
                     <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                       <Bot size={14} />
                     </div>
@@ -200,6 +209,7 @@ export function Chatbot({ onNavigate }: { onNavigate: (id: string) => void }) {
                   type="submit"
                   disabled={!input.trim() || isLoading}
                   className="w-10 h-10 bg-brand-accent text-white rounded-full flex items-center justify-center disabled:opacity-50 hover:scale-105 transition-transform"
+                  aria-label={isLoading ? "Sending message" : "Send message"}
                 >
                   <Send size={16} />
                 </button>

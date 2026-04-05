@@ -54,7 +54,7 @@ export const caseStudies: CaseStudy[] = [
     role: "Senior Product Designer",
     period: "2022 - Present",
     color: "#f97316",
-    image: "https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&q=80&w=1200",
+    image: "https://www.peachpayments.com/wp-content/uploads/2025/07/Mobile-First-Checkout.png",
     tags: ["Fintech", "Payments"],
     
     impact: [
@@ -138,7 +138,7 @@ export const caseStudies: CaseStudy[] = [
     role: "Product Design Lead",
     period: "2021 - 2022",
     color: "#eab308",
-    image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=1200",
+    image: "https://www.peachpayments.com/wp-content/uploads/2025/07/Foreign-Card-Acceptance.png",
     tags: ["Fintech", "Credit"],
     
     impact: [
@@ -223,7 +223,7 @@ export const caseStudies: CaseStudy[] = [
     role: "Product Design Consultant",
     period: "2020 - 2021",
     color: "#10b981",
-    image: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=1200",
+    image: "https://mergdata.com/wp-content/uploads/2025/06/darli.jpg",
     tags: ["Agtech", "Data Infra", "SaaS"],
     
     impact: [

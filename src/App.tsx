@@ -38,6 +38,18 @@ import {
 import { caseStudies, CaseStudy } from './types';
 import { Chatbot } from './components/Chatbot';
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.215, 0.61, 0.355, 1]
+    }
+  }
+};
+
 export default function App() {
   const [activePage, setActivePage] = useState<'home' | 'about' | string>('home');
   const [activeSection, setActiveSection] = useState<string>('hero');
@@ -184,7 +196,7 @@ export default function App() {
         <div className="hidden md:flex items-center gap-10 text-xs font-bold uppercase tracking-widest">
           <button 
             onClick={() => setIsMuted(!isMuted)}
-            className="text-gray-400 hover:text-black transition-colors cursor-pointer flex items-center gap-2"
+            className="text-gray-500 hover:text-black transition-colors cursor-pointer flex items-center gap-2"
             aria-label={isMuted ? "Unmute piano scroll" : "Mute piano scroll"}
           >
             {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -252,13 +264,13 @@ export default function App() {
                 }
                 setIsMenuOpen(false); 
               }}
-              className={`cursor-pointer hover:opacity-50 transition-opacity ${activeSection === 'work' ? 'text-black' : 'text-gray-400'}`}
+              className={`cursor-pointer hover:opacity-50 transition-opacity ${activeSection === 'work' ? 'text-black' : 'text-gray-500'}`}
             >
               Work
             </button>
             <button 
               onClick={() => { setActivePage('about'); setIsMenuOpen(false); }}
-              className={`cursor-pointer hover:opacity-50 transition-opacity ${activePage === 'about' ? 'text-black' : 'text-gray-400'}`}
+              className={`cursor-pointer hover:opacity-50 transition-opacity ${activePage === 'about' ? 'text-black' : 'text-gray-500'}`}
             >
               About
             </button>
@@ -267,7 +279,7 @@ export default function App() {
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 setIsMenuOpen(false);
               }}
-              className={`cursor-pointer hover:opacity-50 transition-opacity ${activeSection === 'contact' ? 'text-black' : 'text-gray-400'}`}
+              className={`cursor-pointer hover:opacity-50 transition-opacity ${activeSection === 'contact' ? 'text-black' : 'text-gray-500'}`}
             >
               Contact
             </button>
@@ -329,7 +341,13 @@ export default function App() {
         />
         <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/40 to-black/80" />
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+          className="max-w-7xl mx-auto relative z-10"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
             <div>
               <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight text-white">Let's build something together.</h2>
@@ -339,15 +357,15 @@ export default function App() {
               
               <div className="space-y-8">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Location</p>
+                  <p className="text-xs font-bold uppercase tracking-widest text-white/70 mb-2">Location</p>
                   <p className="text-lg font-medium text-white">Amsterdam, Netherlands & Remote</p>
                 </div>
                 
                 <div className="flex flex-col gap-6">
                   <div className="flex gap-8">
-                    <a href="https://www.linkedin.com/in/mrbenjamint/" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin size={24} /></a>
-                    <a href="https://www.instagram.com/mr_benjamn_/" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors" aria-label="Instagram"><Instagram size={24} /></a>
-                    <a href="mailto:bensackey5@gmail.com" className="text-white/40 hover:text-white transition-colors" aria-label="Email"><Mail size={24} /></a>
+                    <a href="https://www.linkedin.com/in/mrbenjamint/" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin size={24} /></a>
+                    <a href="https://www.instagram.com/mr_benjamn_/" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="Instagram"><Instagram size={24} /></a>
+                    <a href="mailto:bensackey5@gmail.com" className="text-white/70 hover:text-white transition-colors" aria-label="Email"><Mail size={24} /></a>
                   </div>
                 </div>
               </div>
@@ -361,11 +379,11 @@ export default function App() {
           <div className="mt-32 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div>
               <h3 className="text-xl font-display font-bold tracking-tight text-white">Benjamin Sackey</h3>
-              <p className="text-sm text-white/40">Senior Product Designer at Peach Payments</p>
+              <p className="text-sm text-white/70">Senior Product Designer at Peach Payments</p>
             </div>
-            <p className="text-xs text-white/40 uppercase tracking-widest font-bold">© 2026 Benjamin Sackey</p>
+            <p className="text-xs text-white/70 uppercase tracking-widest font-bold">© 2026 Benjamin Sackey</p>
           </div>
-        </div>
+        </motion.div>
       </footer>
     </div>
   );
@@ -417,6 +435,7 @@ function ContactForm({ isDark = false }: { isDark?: boolean }) {
         <button 
           onClick={() => setStatus('idle')}
           className={`text-sm font-bold uppercase tracking-widest border-b-2 border-brand-accent pb-1 hover:opacity-50 transition-opacity ${isDark ? 'text-white' : 'text-black'}`}
+          aria-label="Send another message"
         >
           Send another message
         </button>
@@ -428,7 +447,7 @@ function ContactForm({ isDark = false }: { isDark?: boolean }) {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label htmlFor="name" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/40' : 'text-gray-400'}`}>Name</label>
+          <label htmlFor="name" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/70' : 'text-gray-500'}`}>Name</label>
           <input
             required
             type="text"
@@ -436,10 +455,11 @@ function ContactForm({ isDark = false }: { isDark?: boolean }) {
             name="name"
             placeholder="Your name"
             className={`w-full px-0 py-3 bg-transparent border-b ${isDark ? 'border-white/10 focus:border-white text-white' : 'border-gray-200 focus:border-black'} focus:outline-none transition-colors font-light text-lg`}
+            aria-required="true"
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="email" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/40' : 'text-gray-400'}`}>Email</label>
+          <label htmlFor="email" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/70' : 'text-gray-500'}`}>Email</label>
           <input
             required
             type="email"
@@ -447,12 +467,13 @@ function ContactForm({ isDark = false }: { isDark?: boolean }) {
             name="email"
             placeholder="your@email.com"
             className={`w-full px-0 py-3 bg-transparent border-b ${isDark ? 'border-white/10 focus:border-white text-white' : 'border-gray-200 focus:border-black'} focus:outline-none transition-colors font-light text-lg`}
+            aria-required="true"
           />
         </div>
       </div>
       
       <div className="space-y-2">
-        <label htmlFor="message" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/40' : 'text-gray-400'}`}>Message</label>
+        <label htmlFor="message" className={`text-[10px] font-bold uppercase tracking-widest ${isDark ? 'text-white/70' : 'text-gray-500'}`}>Message</label>
         <textarea
           required
           id="message"
@@ -460,6 +481,7 @@ function ContactForm({ isDark = false }: { isDark?: boolean }) {
           rows={4}
           placeholder="Tell me about your project..."
           className={`w-full px-0 py-3 bg-transparent border-b ${isDark ? 'border-white/10 focus:border-white text-white' : 'border-gray-200 focus:border-black'} focus:outline-none transition-colors font-light text-lg resize-none`}
+          aria-required="true"
         ></textarea>
       </div>
 
@@ -467,6 +489,7 @@ function ContactForm({ isDark = false }: { isDark?: boolean }) {
         type="submit"
         disabled={status === 'loading'}
         className="w-full py-5 bg-brand-accent text-white text-xs font-bold uppercase tracking-[0.2em] hover:opacity-90 transition-all flex items-center justify-center gap-3 disabled:bg-gray-400 disabled:cursor-not-allowed group"
+        aria-label={status === 'loading' ? "Sending message" : "Send message"}
       >
         {status === 'loading' ? (
           <>
@@ -482,7 +505,7 @@ function ContactForm({ isDark = false }: { isDark?: boolean }) {
       </button>
       
       {status === 'error' && (
-        <p className="text-red-500 text-xs font-medium text-center">Something went wrong. Please try again or email me directly.</p>
+        <p className="text-red-600 text-xs font-medium text-center" aria-live="assertive">Something went wrong. Please try again or email me directly.</p>
       )}
     </form>
   );
@@ -542,18 +565,27 @@ function Home({ onNavigate }: { onNavigate: (page: string) => void }) {
       {/* Selected Work */}
       <section id="work" className="px-6 mb-40">
         <div className="max-w-7xl mx-auto">
-          <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-16 border-b border-gray-100 pb-4">Selected Work</h3>
+          <motion.h3 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={sectionVariants}
+            className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-16 border-b border-gray-100 pb-4"
+          >
+            Selected Work
+          </motion.h3>
           <div className="flex flex-col gap-40">
             {caseStudies.map((study, index) => (
               <motion.div 
                 key={study.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -8 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-100px" }}
                 transition={{ 
-                  delay: index * 0.1,
-                  y: { duration: 0.3, ease: "easeOut" }
+                  duration: 0.8,
+                  ease: [0.215, 0.61, 0.355, 1],
+                  delay: index * 0.1
                 }}
                 className="group cursor-pointer grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-8 rounded-sm"
                 onClick={() => onNavigate(study.id)}
@@ -582,7 +614,7 @@ function Home({ onNavigate }: { onNavigate: (page: string) => void }) {
                 <div className="flex flex-col justify-center">
                   <div className="flex gap-3 mb-6">
                     {study.tags.map(tag => (
-                      <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-3 py-1 border border-gray-100 rounded-full">{tag}</span>
+                      <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-gray-500 px-3 py-1 border border-gray-100 rounded-full">{tag}</span>
                     ))}
                   </div>
                   <h3 className="text-2xl md:text-4xl font-display font-medium tracking-tight group-hover:opacity-70 transition-opacity leading-tight">
@@ -601,14 +633,23 @@ function Home({ onNavigate }: { onNavigate: (page: string) => void }) {
       {/* Podcast Section */}
       <section className="px-6 mb-40">
         <div className="max-w-7xl mx-auto">
-          <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-16 border-b border-gray-100 pb-4">Media & Podcasts</h3>
+          <motion.h3 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={sectionVariants}
+            className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-16 border-b border-gray-100 pb-4"
+          >
+            Media & Podcasts
+          </motion.h3>
           
           <div className="flex flex-col gap-32">
             {/* Episode 1 */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
               className="group grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center"
             >
               <div className="w-full">
@@ -627,7 +668,7 @@ function Home({ onNavigate }: { onNavigate: (page: string) => void }) {
               </div>
 
               <div className="flex flex-col justify-center">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">Mar 5, 2024</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-6">Mar 5, 2024</p>
                 <h3 className="text-2xl md:text-4xl font-display font-medium tracking-tight leading-tight mb-6">
                   <span className="font-bold border-b-2 border-black pb-0.5">Building Bytes</span> — The evolution of Ghana's product design and development space with Benjamin Sackey
                 </h3>
@@ -639,9 +680,10 @@ function Home({ onNavigate }: { onNavigate: (page: string) => void }) {
 
             {/* Episode 2 */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1], delay: 0.2 }}
               className="group grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center"
             >
               <div className="w-full md:order-last">
@@ -659,7 +701,7 @@ function Home({ onNavigate }: { onNavigate: (page: string) => void }) {
               </div>
 
               <div className="flex flex-col justify-center">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">Oct 24, 2023</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-6">Oct 24, 2023</p>
                 <h3 className="text-2xl md:text-4xl font-display font-medium tracking-tight leading-tight mb-6">
                   <span className="font-bold border-b-2 border-black pb-0.5">Demo Fridays</span> — Building technology for the Ghanaian market
                 </h3>
@@ -697,9 +739,10 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
           
           <div className="space-y-24 text-xl font-light leading-relaxed text-gray-600">
             <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={sectionVariants}
             >
               <h3 className="text-xs font-bold uppercase tracking-widest text-black mb-8 border-b border-gray-100 pb-4">Narrative</h3>
               <div className="max-w-2xl">
@@ -716,10 +759,10 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
             </motion.section>
 
             <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={sectionVariants}
             >
               <h3 className="text-xs font-bold uppercase tracking-widest text-black mb-8 border-b border-gray-100 pb-4">Design Philosophy</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -739,59 +782,54 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
             </motion.section>
 
             <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                }
+              }}
             >
               <h3 className="text-xs font-bold uppercase tracking-widest text-black mb-8 border-b border-gray-100 pb-4">Experience</h3>
               <ul className="space-y-8 max-w-2xl">
-                <li className="flex justify-between items-start border-b border-gray-100 pb-4">
-                  <div>
-                    <p className="text-black font-bold">Peach Payments</p>
-                    <p className="text-sm text-gray-400">Senior Product Designer</p>
-                  </div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">2022 — Present</p>
-                </li>
-                <li className="flex justify-between items-start border-b border-gray-100 pb-4">
-                  <div>
-                    <p className="text-black font-bold">Sommalife</p>
-                    <p className="text-sm text-gray-400">Design Consultant</p>
-                  </div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">2020 — Present</p>
-                </li>
-                <li className="flex justify-between items-start border-b border-gray-100 pb-4">
-                  <div>
-                    <p className="text-black font-bold">Float (YC Startup)</p>
-                    <p className="text-sm text-gray-400">Product Design Lead</p>
-                  </div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">2021 — 2022</p>
-                </li>
-                <li className="flex justify-between items-start border-b border-gray-100 pb-4">
-                  <div>
-                    <p className="text-black font-bold">Farmerline Group</p>
-                    <p className="text-sm text-gray-400">Product Designer</p>
-                  </div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">2019 — 2020</p>
-                </li>
-                <li className="flex justify-between items-start border-b border-gray-100 pb-4">
-                  <div>
-                    <p className="text-black font-bold">Hubtel</p>
-                    <p className="text-sm text-gray-400">Product Designer</p>
-                  </div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">2017 — 2019</p>
-                </li>
+                {[
+                  { company: "Peach Payments", role: "Senior Product Designer", period: "2022 — Present" },
+                  { company: "Sommalife", role: "Design Consultant", period: "2020 — Present" },
+                  { company: "Float (YC Startup)", role: "Product Design Lead", period: "2021 — 2022" },
+                  { company: "Farmerline Group", role: "Product Designer", period: "2019 — 2020" },
+                  { company: "Hubtel", role: "Product Designer", period: "2017 — 2019" }
+                ].map((item, i) => (
+                  <motion.li 
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, x: -20 },
+                      visible: { opacity: 1, x: 0 }
+                    }}
+                    className="flex justify-between items-start border-b border-gray-100 pb-4"
+                  >
+                    <div>
+                      <p className="text-black font-bold">{item.company}</p>
+                      <p className="text-sm text-gray-500">{item.role}</p>
+                    </div>
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">{item.period}</p>
+                  </motion.li>
+                ))}
               </ul>
             </motion.section>
 
             <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={sectionVariants}
               className="pt-12 border-t border-gray-100"
             >
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-400 mb-4">Tech Stack</p>
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-500 mb-4">Tech Stack</p>
               <h2 className="text-[55px] font-sans font-bold mb-12 text-[#101010]">What I Use</h2>
               
               <p className="text-lg text-gray-500 mb-16 leading-relaxed max-w-2xl">
@@ -809,7 +847,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">Figma</p>
-                        <p className="text-sm text-gray-400">UI, prototyping, systems</p>
+                        <p className="text-sm text-gray-500">UI, prototyping, systems</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 pb-6 border-b border-gray-50 group">
@@ -818,7 +856,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">FigJam / Miro</p>
-                        <p className="text-sm text-gray-400">workshops, ideation</p>
+                        <p className="text-sm text-gray-500">workshops, ideation</p>
                       </div>
                     </div>
                   </div>
@@ -834,7 +872,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">Jira</p>
-                        <p className="text-sm text-gray-400">delivery, sprints</p>
+                        <p className="text-sm text-gray-500">delivery, sprints</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 pb-6 border-b border-gray-50 group">
@@ -843,7 +881,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">Confluence</p>
-                        <p className="text-sm text-gray-400">documentation</p>
+                        <p className="text-sm text-gray-500">documentation</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 pb-6 border-b border-gray-50 group">
@@ -852,7 +890,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">Slack</p>
-                        <p className="text-sm text-gray-400">team collaboration</p>
+                        <p className="text-sm text-gray-500">team collaboration</p>
                       </div>
                     </div>
                   </div>
@@ -868,7 +906,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">ChatGPT / Claude / Gemini</p>
-                        <p className="text-sm text-gray-400">research, thinking, writing</p>
+                        <p className="text-sm text-gray-500">research, thinking, writing</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 pb-6 border-b border-gray-50 group">
@@ -877,7 +915,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">Cursor / Lovable</p>
-                        <p className="text-sm text-gray-400">rapid prototyping</p>
+                        <p className="text-sm text-gray-500">rapid prototyping</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 pb-6 border-b border-gray-50 group">
@@ -888,7 +926,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">Gamma</p>
-                        <p className="text-sm text-gray-400">storytelling, visuals</p>
+                        <p className="text-sm text-gray-500">storytelling, visuals</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 pb-6 border-b border-gray-50 group">
@@ -897,7 +935,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">NotebookLM</p>
-                        <p className="text-sm text-gray-400">knowledge synthesis</p>
+                        <p className="text-sm text-gray-500">knowledge synthesis</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 pb-6 border-b border-gray-50 group">
@@ -908,7 +946,7 @@ function AboutPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                       </div>
                       <div>
                         <p className="font-bold text-black">Granola</p>
-                        <p className="text-sm text-gray-400">notes, insights</p>
+                        <p className="text-sm text-gray-500">notes, insights</p>
                       </div>
                     </div>
                   </div>
@@ -939,7 +977,7 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           onClick={onBack}
-          className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] mb-16 hover:opacity-50 transition-opacity text-gray-400 cursor-pointer"
+          className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] mb-16 hover:opacity-50 transition-opacity text-gray-500 cursor-pointer"
           aria-label="Back to work"
         >
           <ArrowLeft size={14} /> Back to Work
@@ -954,13 +992,13 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
         >
           <div className="flex gap-3 mb-8">
             {study.tags.map(tag => (
-              <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-3 py-1 border border-gray-100 rounded-full">{tag}</span>
+              <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-gray-500 px-3 py-1 border border-gray-100 rounded-full">{tag}</span>
             ))}
           </div>
           <h1 className="text-5xl md:text-8xl font-swear font-bold mb-6 tracking-tighter leading-none italic">
             {study.title}
           </h1>
-          <p className="text-2xl md:text-4xl font-light text-gray-400 leading-tight max-w-4xl">
+          <p className="text-2xl md:text-4xl font-light text-gray-500 leading-tight max-w-4xl">
             {study.subtitle}
           </p>
           {study.link && (
@@ -978,7 +1016,7 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
                   href={study.pdfLink} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-black transition-colors"
+                  className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors"
                 >
                   View Case Work PDF <FileText size={14} />
                 </a>
@@ -989,19 +1027,20 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 1. Impact (Hero Section) */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="mb-40"
         >
-          <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-12 border-b border-gray-100 pb-4">Impact</h3>
+          <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 mb-12 border-b border-gray-100 pb-4">Impact</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {study.impact.map((item, i) => (
               <div key={i} className="p-12 bg-gray-50 rounded-sm border border-gray-100 flex flex-col items-center justify-center text-center">
                 <span className="text-6xl md:text-8xl font-display font-bold mb-4" style={{ color: study.color }}>
                   {item.value}
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
                   {item.label}
                 </span>
               </div>
@@ -1011,34 +1050,35 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 2. Overview */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Overview</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Overview</h3>
           </div>
           <div className="md:col-span-8 grid grid-cols-2 gap-12">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Role</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Role</p>
               <p className="text-lg font-medium">{study.overview.role}</p>
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Scope</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Scope</p>
               <p className="text-lg font-medium">{study.overview.scope}</p>
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Team</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Team</p>
               <p className="text-lg font-medium">{study.overview.team}</p>
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Context</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Context</p>
               <p className="text-lg font-medium">{study.overview.context}</p>
             </div>
             {study.link && (
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Live Project</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2">Live Project</p>
                 <a 
                   href={study.link.url} 
                   target="_blank" 
@@ -1054,13 +1094,14 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 3. Problem */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Problem</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Problem</h3>
           </div>
           <div className="md:col-span-8">
             <div className="p-10 md:p-16 bg-gray-50 rounded-sm border border-gray-100">
@@ -1077,13 +1118,14 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 4. Goal */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Goal</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Goal</h3>
           </div>
           <div className="md:col-span-8">
             <ul className="space-y-4">
@@ -1096,13 +1138,14 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 5. My Role */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">My Role</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">My Role</h3>
           </div>
           <div className="md:col-span-8">
             <ul className="space-y-4">
@@ -1115,13 +1158,14 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 6. Key Insight */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Key Insight</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Key Insight</h3>
           </div>
           <div className="md:col-span-8">
             <div className="p-10 md:p-16 bg-black text-white rounded-sm">
@@ -1134,13 +1178,14 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 7. Solution */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Solution</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Solution</h3>
           </div>
           <div className="md:col-span-8">
             <ul className="space-y-4">
@@ -1153,43 +1198,70 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 8. Key Decisions (CRITICAL) */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Key Decisions</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Key Decisions</h3>
           </div>
-          <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="md:col-span-8 grid grid-cols-1 gap-8">
             {study.keyDecisions.map((decision, i) => (
-              <div key={i} className="p-10 bg-gray-50 rounded-sm border border-gray-100 flex flex-col gap-6">
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Decision</p>
-                  <p className="text-xl font-bold">{decision.title}</p>
+              <motion.div 
+                key={i} 
+                whileHover={{ x: 10 }}
+                className="group p-8 md:p-12 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col md:flex-row gap-12 relative overflow-hidden"
+              >
+                {/* Accent line */}
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-brand-accent transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
+                
+                <div className="md:w-1/3">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent">
+                      <span className="text-xs font-bold">{i + 1}</span>
+                    </div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-brand-accent">Strategic Choice</p>
+                  </div>
+                  <h4 className="text-2xl font-display font-bold tracking-tight leading-tight">
+                    {decision.title}
+                  </h4>
                 </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Why</p>
-                  <p className="text-sm text-gray-600 leading-relaxed">{decision.why}</p>
+
+                <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gray-500">
+                      <Search size={12} /> The Rationale
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed font-light">
+                      {decision.why}
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gray-500">
+                      <Zap size={12} /> The Tradeoff
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed font-light">
+                      {decision.tradeoff}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Tradeoff</p>
-                  <p className="text-sm text-gray-600 leading-relaxed">{decision.tradeoff}</p>
-                </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.section>
 
         {/* 9. Execution */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Execution</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Execution</h3>
           </div>
           <div className="md:col-span-8">
             <ul className="space-y-4">
@@ -1202,13 +1274,14 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 10. Outcome */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32"
         >
           <div className="md:col-span-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Outcome</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Outcome</h3>
           </div>
           <div className="md:col-span-8">
             <ul className="space-y-4">
@@ -1221,13 +1294,14 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* 11. Reflection */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="mb-20 py-24 px-12 bg-gray-50 rounded-sm border border-gray-100"
         >
           <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-8">Reflection</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 mb-8">Reflection</h3>
             <p className="text-3xl md:text-5xl font-display font-bold tracking-tighter leading-tight">
               {study.reflection}
             </p>
@@ -1237,9 +1311,10 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
         {/* 12. Live Project Link */}
         {(study.link || study.pdfLink) && (
           <motion.section 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={sectionVariants}
             className="mb-40"
           >
             <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-16">
@@ -1250,7 +1325,7 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
                   rel="noopener noreferrer"
                   className="group inline-flex flex-col items-center gap-6"
                 >
-                  <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Live Project</span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Live Project</span>
                   <span className="text-4xl md:text-6xl font-display font-bold border-b-4 border-brand-accent pb-2 group-hover:opacity-50 transition-opacity tracking-tighter">
                     {study.link.label} <ExternalLink className="inline-block ml-4 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" size={40} />
                   </span>
@@ -1264,8 +1339,8 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
                   rel="noopener noreferrer"
                   className="group inline-flex flex-col items-center gap-6"
                 >
-                  <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Documentation</span>
-                  <span className="text-2xl md:text-4xl font-display font-bold text-gray-400 group-hover:text-black transition-colors tracking-tighter">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Documentation</span>
+                  <span className="text-2xl md:text-4xl font-display font-bold text-gray-500 group-hover:text-black transition-colors tracking-tighter">
                     View Case Work PDF <FileText className="inline-block ml-3 group-hover:scale-110 transition-transform" size={24} />
                   </span>
                 </a>
@@ -1276,9 +1351,10 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
 
         {/* Next Project */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
           className="pt-24 border-t border-gray-100 flex justify-center"
         >
           <button 
@@ -1286,7 +1362,7 @@ function CaseStudyView({ study, onBack }: { study: CaseStudy, onBack: () => void
             className="group flex flex-col items-center gap-6 cursor-pointer"
             aria-label="View all work"
           >
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Next Project</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">Next Project</span>
             <span className="text-4xl md:text-7xl font-display font-bold group-hover:opacity-50 transition-opacity tracking-tighter">
               View all work <ArrowRight className="inline-block ml-6 group-hover:translate-x-6 transition-transform" size={48} />
             </span>
