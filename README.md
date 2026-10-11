@@ -1,20 +1,25 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# benjaminsackey.com
 
-# Run and deploy your AI Studio app
+Portfolio of Benjamin Sackey, product designer for payments, risk and internal tools.
 
-This contains everything you need to run your app locally.
+Built with Next.js (App Router). The 3D avatar uses three.js, copied into `public/vendor` on install.
 
-View your app in AI Studio: https://ai.studio/apps/4c12eb22-0790-4c80-80a4-87ee3d6f56a5
+## Run locally
 
-## Run Locally
+```bash
+npm install
+npm run dev
+```
 
-**Prerequisites:**  Node.js
+Open http://localhost:3000.
 
+## Deploy
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Import the repo in Vercel. Framework preset: **Next.js**. No environment variables needed.
+
+## Editing content
+
+- Case studies and side projects: `content/work.ts`
+- Resume page: `content/resume.ts`
+- Assistant lines (greeting, facts, musings): `public/orb.js`
+- Images: `public/images`, 3D model: `public/models/ben.glb`
